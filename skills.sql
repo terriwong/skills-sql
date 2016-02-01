@@ -113,8 +113,18 @@ WHERE models.year = '1960';
 -- before: 
 
     ALTER TABLE models ADD years_until_brand_discontinued INTEGER;
-    UPDATE models JOIN brands ON brands.name = models.brand_name
-    SET years_until_brand_discontinued = (brands.discontinued - models.year);
+
+    -- FROM models JOIN brands ON brands.name = models.brand_name
+    -- UPDATE models SET years_until_brand_discontinued = (brands.discontinued - models.year);
+
+    INSERT INTO models (years_until_brand_discontinued)
+    (
+     (SELECT (SELECT discontinued FROM brands) -
+             (SELECT year FROM models)
+             AS years_until_brand_discontinued
+      FROM models LEFT JOIN brands ON models.brand_name = brands.name
+      WHERE brands.discontinued IS NOT NULL;)
+    )
 
     SELECT b.name,
            m.name,
