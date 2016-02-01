@@ -51,8 +51,8 @@ WHERE discontinued IS null;
 SELECT *
 FROM models
 ORDER BY name
-OFFSET 15
-LIMIT 10;
+OFFSET 14
+LIMIT 11;
 
 -- 9. Select the brand, name, and year the model's brand was 
 --    founded for all of the models from 1960. Include row(s)
